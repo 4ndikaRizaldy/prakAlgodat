@@ -1,0 +1,82 @@
+package algodat.p6;
+
+import java.util.Scanner;
+
+class Node {
+    private int info;
+    Node kanan;
+    Node kiri;
+
+    public Node() {
+        kanan = null;
+        kiri = null;
+        info = 0;
+    }
+
+    public Node(int data) {
+        this.info = data;
+        kiri = kanan = null;
+    }
+
+    public void setData(int data) {
+        this.info = data;
+    }
+
+    public int getData() {
+        return info;
+    }
+}
+
+class Tree2 {
+    Node root;
+
+    public Tree2() {
+        root = null;
+    }
+
+    public int visit() {
+        return root.getData();
+    }
+
+    public void add(int nilai) {
+        root = add(root, nilai);
+    }
+
+    public Node add(Node root, int nilai) {
+        if (root == null) {
+            root = new Node(nilai);
+        } else if (root.getData() > nilai) {
+            root.kiri = add(root.kiri, nilai);
+        } else if (root.getData() < nilai) {
+            root.kanan = add(root.kanan, nilai);
+        }
+        return root;
+    }
+
+    public void PreOrder(Node root) {
+        if (root != null) {
+            System.out.print(root.getData() + " ");
+            PreOrder(root.kiri);
+            PreOrder(root.kanan);
+        }
+    }
+}
+
+public class js2 {
+    public static void main(String[] args) {
+        Tree2 tr = new Tree2();
+        Scanner inp = new Scanner(System.in);
+        System.out.print("Masukan banyak nilai : ");
+        int jum = inp.nextInt();
+        int[] nilai = new int[jum];
+        for (int i = 0; i < nilai.length; i++) {
+            Scanner in = new Scanner(System.in);
+            System.out.print("Nilai ke-" + (i + 1) + " = ");
+            int masuk = in.nextInt();
+            tr.add(masuk);
+        }
+        System.out.print("Traversal Tree Pre Order :");
+        tr.PreOrder(tr.root);
+        System.out.println("");
+    }
+}
